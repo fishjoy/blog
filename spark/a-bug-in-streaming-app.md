@@ -8,9 +8,9 @@
 
 ##现象：
 batchSize设置为1分钟，程序刚开始运行的一天内，每个batch的处理时间都是2秒以下，如下图：
-![start.png](http://upload-images.jianshu.io/upload_images/2838375-a9bcecee29862a07.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![start.png](../images/a-bug-in-streaming-app-start.png)
 运行长时间之后，监控页面如下：（忽略时间戳，为了截图重启了程序）
-![end.png](http://upload-images.jianshu.io/upload_images/2838375-e69bb555babf300d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![end.png](../images/a-bug-in-streaming-app-end.png)
 可以看到，每个job都skip了大量的stage，每个stage内，都skip了大量的task。而且有一个很有意思的现象，skip的数量都是递增的。而且，从skip的数字上来看，也很有规律。
 再注意 job内stage的执行时间，每个job有2个stage，加起来平均2~3秒。但此时，batch的处理时延已经达到了20~30秒。
 总结一下遇到的问题：我的streaming程序连续运行一周之后，慢了一个数量级，但实际花费在执行上的时间近似不变。到这，我已经认为是一个“神奇的bug”了。
