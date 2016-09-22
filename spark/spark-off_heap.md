@@ -5,8 +5,7 @@
 Spark中RDD提供了几种存储级别，不同的存储级别可以带来不同的容错性能，例如 `MEMORY_ONLY`,`MEMORY_ONLY_SER_2`...其中，有一种特别的是`OFF_HEAP`
 `off_heap`的优势在于，在内存有限的条件下，减少不必要的内存消耗，以及频繁的GC问题，提升程序性能。
 Spark2.0以前，默认的off_heap是Tachyon，当然，你可以通过继承`ExternalBlockManager` 来实现你自己想要的任何off_heap。
-这里说Tachyon，是因为Spark默认的TachyonBlockManager开发完成之后，就再也没有更新过，以至于Tachyon升级为Alluxio之后移除不使用的API，导致Spark默认off_heap不可用，这个问题Spark社区和Alluxio社区都有反馈：
-https://alluxio.atlassian.net/browse/ALLUXIO-1881
+这里说Tachyon，是因为Spark默认的TachyonBlockManager开发完成之后，就再也没有更新过，以至于Tachyon升级为Alluxio之后移除不使用的API，导致Spark默认off_heap不可用，这个问题Spark社区和Alluxio社区都有反馈:[ALLUXIO-1881](https://alluxio.atlassian.net/browse/ALLUXIO-1881)
 
 #Spark2.0的off_heap
 从spark2.0开始，社区已经移除默认的TachyonBlockManager以及ExternalBlockManager相关的API：[SPARK-12667](https://issues.apache.org/jira/browse/SPARK-12667)。
