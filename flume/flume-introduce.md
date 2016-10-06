@@ -26,8 +26,8 @@ Flume NG：Flume New Generation
 * Channel：中转Event的一个临时存储，保存有Source组件传递过来的Event。
 * Sink：从Channel中读取并移除Event，将Event传递到Flow Pipeline中的下一个Agent（如果有的话）。
 ## 数据流：
-    Flume 的核心是把数据从数据源收集过来，再送到目的地。为了保证输送一定成功，在送到目的地之前，会先缓存数据，待数据真正到达目的地后，删除自己缓存的数据：当sink写入失败后，可以自动重启，不会造成数据丢失，因此很可靠。
-    Flume 传输的数据的基本单位是 Event，如果是文本文件，通常是一行记录，这也是事务的基本单位。Event 从 Source，流向 Channel，再到 Sink，本身为一个 byte 数组，并可携带 headers 信息。Event 代表着一个数据流的最小完整单元，从外部数据源来，向外部的目的地去。
+Flume 的核心是把数据从数据源收集过来，再送到目的地。为了保证输送一定成功，在送到目的地之前，会先缓存数据，待数据真正到达目的地后，删除自己缓存的数据：当sink写入失败后，可以自动重启，不会造成数据丢失，因此很可靠。
+Flume 传输的数据的基本单位是 Event，如果是文本文件，通常是一行记录，这也是事务的基本单位。Event 从 Source，流向 Channel，再到 Sink，本身为一个 byte 数组，并可携带 headers 信息。Event 代表着一个数据流的最小完整单元，从外部数据源来，向外部的目的地去。
 ##核心组件：
 ###Source
 * ExecSource: 以运行 Linux 命令的方式，持续的输出最新的数据，如 tail -F 文件名 指令，在这种方式下，取的文件名必须是指定的。 ExecSource 可以实现对日志的实时收集，但是存在Flume不运行或者指令执行出错时，将无法收集到日志数据，无法保证日志数据的完整性。 
@@ -37,9 +37,9 @@ Flume NG：Flume New Generation
 *  MemoryChannel 可以实现高速的吞吐，但是无法保证数据的完整性。 
 *  MemoryRecoverChannel 在官方文档的建议上已经建义使用FileChannel来替换。
 *  FileChannel保证数据的完整性与一致性。在具体配置FileChannel时，建议FileChannel设置的目录和程序日志文件保存的目录设成不同的磁盘，以便提高效率。
-![flume-channel.png](../images/channel.png)
+![flume-channel.png](../images/flume-channel.png)
 ###Sink
-![flume-sink.png](../images/sink.png)
+![flume-sink.png](../images/flume-sink.png)
 ## 可靠性
 在Flume NG中，可靠性指的是在数据流的传输过程中，保证events的可靠传递。
 在Flume NG中，所有的events都保存在Agent的Channel中，然后被发送到数据流下一个Agent或者最终的存储服务中。当且仅当它们被保存到下一个Agent的Channel中，或者被保存到最终的存储服务中。这就是Flume 提供数据流中点到点的可靠性保证的最基本的单跳消息语义传递。
